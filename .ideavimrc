@@ -1,0 +1,200 @@
+"" Source your .vimrc
+"source ~/.vimrc
+
+"" -- Suggested options --
+" Show a few lines of context around the cursor. Note that this makes the
+" text scroll if you mouse-click near the start or end of the window.
+set scrolloff=5
+
+" Do incremental searching.
+set incsearch
+
+" Don't use Ex mode, use Q for formatting.
+map Q gq
+
+
+"" -- Map IDE actions to IdeaVim -- https://jb.gg/abva4t
+"" Map \r to the Reformat Code action
+"map \r <Action>(ReformatCode)
+
+"" Map <leader>d to start debug
+"map <leader>d <Action>(Debug)
+
+"" Map \b to toggle the breakpoint on the current line
+"map \b <Action>(ToggleLineBreakpoint)
+
+
+" Find more examples here: https://jb.gg/share-ideavimrc
+" I set this short cut in webstorm, but it didnt work property"
+" (ref) https://stackoverflow.com/questions/29834788/ctrlt-ctrlo-not-working-right#:~:text=Neither%20Ctrl%20%2B%20T%20nor%20Ctrl,came%20from%20using%20Ctrl%20%2B%20O%20.
+nmap <C-o> :action Back<CR>
+nmap <C-i> :action Forward<CR>
+
+
+" ============================ common vim settings ========================
+syntax on
+set autoindent
+" normal modeで入力したコマンドが右下に表示される
+set showcmd
+" 検索するときに大文字小文字を区別しない
+set ignorecase
+" 検索時に大文字を含んでいたら大/小を区別
+set smartcase
+" 検索ワードリアルタイムハイライト (incremental search)
+set incsearch
+"入力モード中に素早くJJと入力した場合はESCとみなす
+inoremap jj <Esc>
+" press i to return to normal mode when in visual mode
+vnoremap i <ESC>
+" 検索対象をハイライト
+set hlsearch
+" ESCを二回押すことでハイライトを消す
+nmap <silent> <Esc><Esc> :nohlsearch<CR>
+" ステータス行を常に表示
+set laststatus=2
+set showmode
+" ヤンクでクリップボードにコピー
+set clipboard+=unnamed
+" 行をまたいで移動
+set whichwrap=b,s,h,l,<,>,[,],~
+" 行末の１つ先にカーソルを置ける (改行の時に便利)
+set virtualedit=onemore
+set relativenumber
+" 音消す
+set visualbell t_vb=
+set noerrorbells
+" スワップファイルは使わない
+set noswapfile
+" 上端の位置は上から５行下、下端の上から５行上 (見やすくなります)
+set scrolloff=5
+" mouse click enable
+if has("mouse") " Enable the use of the mouse in all modes
+  set mouse=a
+endif
+"=============================== key mapping =================================
+"x キー削除でデフォルトレジスタに入れない
+nnoremap x "_x
+vnoremap x "_x
+nnoremap s "_s
+vnoremap s "_s
+nnoremap S "_S
+vnoremap S "_S
+" タブキー押下時に挿入される文字幅を指定
+set softtabstop=2
+" ウィンドウ移動ctrl+jだけなどでできるように
+nmap <C-h> <C-w>h
+nmap <C-j> <C-w>j
+nmap <C-k> <C-w>k
+nmap <C-l> <C-w>l
+" moving cursor in insert mode
+inoremap <C-h> <Left>
+inoremap <C-l> <Right>
+" normal modeでEnter押すと、カーソルどこにおってもnormal modeのまま改行 (http://ryutamaki.hatenablog.com/entry/2014/05/15/001222)
+nmap <CR> A<CR><ESC>
+" H / L で行頭・行末に移動する (^と$の代わり)
+" J / K で段落ごとの移動
+noremap <S-h> ^
+noremap <S-l> $
+noremap <S-j> }
+noremap <S-k> {
+" 行末までのyankに設定
+nnoremap Y y$
+" 貼り付け先のインデントに合わせてペーストする
+nnoremap p ]p
+nnoremap P ]P
+" =２回でファイル全体のインデント調整
+nnoremap == gg=G''
+" 数字のincrement, decrement
+nnoremap + <C-a>
+nnoremap - <C-x>
+"<Space>wを2回押してファイルを保存など
+" let mapleader = "\<Space>" (これで書くと挙動変なので、Spaceで直接しています)
+nnoremap <Space><Space> :w<CR>
+"vnoremap <Space>w :w<CR>
+"nnoremap <Space>q :q!<CR>
+"vnoremap <Space>q :q!<CR>
+" (行の移動だが、jetbrainsのshift + ctrl + up / downの方が優秀なのでコメントアウト)
+" https://qiita.com/itmammoth/items/312246b4b7688875d023
+" 行を移動
+" nnoremap <C-Up> "zdd<Up>"zP
+" nnoremap <C-Down> "zdd"zp
+" 複数行を移動 (*上行って下行くと変になる)
+" vnoremap <C-Up> "zx<Up>"zP`[V`]
+" vnoremap <C-Down> "zx"zp`[V`]
+" surround vimのysiw"などの設定 (囲みを追加する)
+" https://rcmdnk.com/blog/2014/05/03/computer-vim-octopress/
+" これ効かねーーーーーーーーーーーーーーーー
+"nmap <Leader>{ ysiw{
+"nmap <Leader>} ysiw}
+"nmap <Leader>[ ysiw[
+"nmap <Leader>] ysiw]
+"nmap <Leader>( ysiw(
+"nmap <Leader>) ysiw)
+"nmap <Leader>< ysiw<
+"nmap <Leader>> ysiw>
+nnoremap <Space>" ysiw"
+"nmap <Leader>' ysiw'
+"nmap <Leader>` ysiw`
+"nmap <Leader>* ysiw*
+"nmap <Leader>a ysiwa
+" ダブルコーテーション→シングルコーテーション
+nnoremap ff <Plug>Csurround"'
+" シングルコーテーション→ダブルコーテーション
+nnoremap tt <Plug>Csurround'"
+
+"================================ plugin =====================================
+if &compatible
+set nocompatible               " Be iMproved
+endif
+
+" Required:
+set runtimepath+=/Users/kaziu/.cache/dein/repos/github.com/Shougo/dein.vim
+
+" Required:
+if dein#load_state('/Users/kaziu/.cache/dein')
+call dein#begin('/Users/kaziu/.cache/dein')
+
+" Let dein manage dein
+" Required:
+call dein#add('/Users/kaziu/.cache/dein/repos/github.com/Shougo/dein.vim')
+
+" Add or remove your plugins here like this:
+"call dein#add('Shougo/neosnippet.vim')
+"call dein#add('Shougo/neosnippet-snippets')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+call dein#add('ryanoasis/vim-devicons')
+call dein#add('easymotion/vim-easymotion')
+call dein#add('tpope/vim-surround')
+call dein#add('alvan/vim-closetag')
+call dein#add('jiangmiao/auto-pairs')
+call dein#add('nathanaelkane/vim-indent-guides')
+
+" Required:
+call dein#end()
+call dein#save_state()
+endif
+
+" Required:
+filetype plugin indent on
+syntax enable
+
+" If you want to install not installed plugins on startup.
+if dein#check_install()
+  call dein#install()
+endif
+
+
+"======================== plugin setting ================================
+"================= airline ======================
+let g:airline_theme = 'wombat'               " テーマの指定
+let g:airline#extensions#tabline#enabled = 1 " タブラインを表示
+let g:airline_powerline_fonts = 1            " Powerline Fontsを利用
+" =============== easy motion
+" map s <Plug>(easymotion-bd-f2)
+"nmap s <Plug>(easymotion-overwin-f2) " こいつがMacでおかしい挙動、致命傷
+
+
+"============================ idea vim ==============================
+"ace jump starts !!
+nmap <Space>j :action AceAction<CR>
