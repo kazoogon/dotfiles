@@ -11,6 +11,6 @@ $ sh link.sh
 ```
 
 ## node version management
-- nodenv
-Easy to change node version for each directory
-(good ref)[https://r17n.page/2019/08/10/nodejs-change-version-directory/]
+- [nodenv](https://github.com/nodenv/nodenv)  
+Easy to change node version for each directory  
+[good ref](https://r17n.page/2019/08/10/nodejs-change-version-directory/)
