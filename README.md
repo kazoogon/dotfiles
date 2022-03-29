@@ -15,7 +15,7 @@ $ sh link.sh
 Easy to change node version for each directory  
 [good ref](https://r17n.page/2019/08/10/nodejs-change-version-directory/)
 
-need to add in ~/.bashrc
+need to add in ~/.bashrc (If you you zsh, ~/.zshrc)
 ```
 export PATH="$HOME/.nodenv/bin:$PATH"
 eval "$(nodenv init -)"
